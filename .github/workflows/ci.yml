@@ -1,11 +1,13 @@
-name: CI
+name: Node CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run simple test
-        run: echo "✅ Tests passed!"
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
