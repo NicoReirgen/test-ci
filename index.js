@@ -1,5 +1,5 @@
-function addition(a, b) {
-  return a + b;
+function isTrue() {
+  return true;
 }
 
-module.exports = addition;
+module.exports = isTrue;
