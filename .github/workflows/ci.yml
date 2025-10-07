@@ -24,3 +24,42 @@ jobs:
 
       - name: 🧪 Lancer les tests
         run: npm test
+
+  compatibility-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧩 Cloner le dépôt
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Installer Node.js (version 20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📦 Installer les dépendances
+        run: npm install
+
+      - name: 🧪 Tests de compatibilité
+        run: npm test
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧩 Cloner le dépôt
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: 📦 Installer les dépendances
+        run: npm install
+
+      - name: 🔍 Vérification du code
+        run: |
+          echo "Vérification de la syntaxe JavaScript..."
+          node -c index.js
+          echo "✅ Syntaxe valide!"
