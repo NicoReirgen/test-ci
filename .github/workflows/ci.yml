@@ -12,14 +12,18 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [18, 20]
         include:
-          - node-version: 18
-            test-name: "🧪 Tests principaux"
-          - node-version: 20
-            test-name: "🧪 Tests de compatibilité"
+          - job-name: "additions"
+            node-version: 18
+            test-description: "🧪 Lancer les tests"
+          - job-name: "compatibility-18"
+            node-version: 18
+            test-description: "🧪 Tests principaux"
+          - job-name: "compatibility-20"
+            node-version: 20
+            test-description: "🧪 Tests de compatibilité"
 
-    name: Tests Node.js ${{ matrix.node-version }}
+    name: ${{ matrix.job-name }} (Node.js ${{ matrix.node-version }})
 
     steps:
       - name: 🧩 Cloner le dépôt
@@ -29,11 +33,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
       - name: 📦 Installer les dépendances
-        run: npm install
+        run: npm ci
 
-      - name: ${{ matrix.test-name }}
+      - name: ${{ matrix.test-description }}
         run: npm test
 
   lint:
@@ -47,9 +52,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'npm'
 
       - name: 📦 Installer les dépendances
-        run: npm install
+        run: npm ci
 
       - name: 🔍 Vérification du code
         run: |
